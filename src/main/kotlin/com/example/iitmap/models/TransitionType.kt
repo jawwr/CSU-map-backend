@@ -10,7 +10,7 @@ data class TransitionType(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    val id: Long,
+    var id: Long,
 
     @Column(name = "name")
     val name: String

@@ -10,7 +10,7 @@ data class Point(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    val id: Long,
+    var id: Long,
 
     @ManyToOne
     @JoinColumn(name = "point_type", nullable = false)

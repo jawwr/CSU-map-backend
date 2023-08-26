@@ -13,7 +13,7 @@ data class Floor(
     val id: Long,
 
     @Column(name = "number", nullable = false)
-    val number: Int,
+    var number: Int,
 
     @Column(name = "tilemap_link", nullable = false)
     val tilemap: String,

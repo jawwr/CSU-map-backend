@@ -2,29 +2,33 @@ package com.example.iitmap.controller.implementation
 
 import com.example.iitmap.controller.api.BuildingApi
 import com.example.iitmap.models.Building
-import io.swagger.v3.oas.annotations.tags.Tag
+import com.example.iitmap.services.BuildingService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class BuildingController : BuildingApi {
+class BuildingController(private val service: BuildingService) : BuildingApi {
     override fun getBuildingById(buildingId: Long): ResponseEntity<Building> {
-        TODO("Not yet implemented")
+        return ResponseEntity.ok(service.getBuildingById(id = buildingId))
     }
 
     override fun getAllBuildings(): ResponseEntity<List<Building>> {
-        TODO("Not yet implemented")
+        return ResponseEntity.ok(service.getAllBuildings())
     }
 
-    override fun createBuilding(building: Building): ResponseEntity<Void> {
-        TODO("Not yet implemented")
+    override fun createBuilding(building: Building): ResponseEntity<Long> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createBuilding(building = building))
     }
 
     override fun updateBuildingById(buildingId: Long, building: Building): ResponseEntity<Void> {
-        TODO("Not yet implemented")
+        building.id = buildingId
+        service.updateBuilding(building = building)
+        return ResponseEntity.ok().build()
     }
 
     override fun deleteBuildingById(buildingId: Long): ResponseEntity<Void> {
-        TODO("Not yet implemented")
+        service.deleteBuilding(buildingId = buildingId)
+        return ResponseEntity.ok().build()
     }
 }

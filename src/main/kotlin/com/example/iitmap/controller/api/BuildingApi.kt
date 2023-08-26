@@ -15,7 +15,7 @@ interface BuildingApi {
     fun getAllBuildings(): ResponseEntity<List<Building>>
 
     @PostMapping
-    fun createBuilding(@RequestBody building: Building): ResponseEntity<Void>
+    fun createBuilding(@RequestBody building: Building): ResponseEntity<Long>
 
     @PutMapping("/{buildingId}")
     fun updateBuildingById(

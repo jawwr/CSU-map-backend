@@ -19,7 +19,7 @@ interface TransitionApi {
         @PathVariable("buildingId") buildingId: Long,
         @PathVariable("floorNumber") floorNumber: Int,
         @RequestBody transition: Transition
-    ): ResponseEntity<Void>
+    ): ResponseEntity<Long>
 
     @PutMapping("/{transitionId}")
     fun updateTransition(

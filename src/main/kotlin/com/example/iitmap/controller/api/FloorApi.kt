@@ -1,10 +1,12 @@
 package com.example.iitmap.controller.api
 
 import com.example.iitmap.models.Floor
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/api/building/{buildingId}/floor")
+@Tag(name = "Api для этажей в корпусе")
 interface FloorApi {
     @GetMapping("/{floorNumber}")
     fun getFloorByNumber(
@@ -19,7 +21,7 @@ interface FloorApi {
     fun createFloorInBuilding(
         @PathVariable("buildingId") buildingId: Long,
         @RequestBody floor: Floor
-    ): ResponseEntity<Void>
+    ): ResponseEntity<Long>
 
     @PutMapping("/{floorNumber}")
     fun updateFloorInBuilding(
