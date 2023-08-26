@@ -1,0 +1,36 @@
+package com.example.iitmap.controller.api
+
+import com.example.iitmap.models.Transition
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+
+@RequestMapping("/api/building/{buildingId}/floor/{floorNumber}/transition")
+interface TransitionApi {
+    @GetMapping
+    fun getAllTransitionOnFloor(
+        @PathVariable("buildingId") buildingId: Long,
+        @PathVariable("floorNumber") floorNumber: Int
+    ): ResponseEntity<List<Transition>>
+
+    @PostMapping
+    fun createTransition(
+        @PathVariable("buildingId") buildingId: Long,
+        @PathVariable("floorNumber") floorNumber: Int,
+        @RequestBody transition: Transition
+    ): ResponseEntity<Void>
+
+    @PutMapping("/{transitionId}")
+    fun updateTransition(
+        @PathVariable("buildingId") buildingId: Long,
+        @PathVariable("floorNumber") floorNumber: Int,
+        @PathVariable("transitionId") transitionId: Long,
+        @RequestBody transition: Transition
+    ): ResponseEntity<Void>
+
+    @DeleteMapping("/{transitionId}")
+    fun deleteTransition(
+        @PathVariable("buildingId") buildingId: Long,
+        @PathVariable("floorNumber") floorNumber: Int,
+        @PathVariable("transitionId") transitionId: Long
+    ): ResponseEntity<Void>
+}

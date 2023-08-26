@@ -16,5 +16,5 @@ data class Building(
     val name: String,
 
     @OneToMany
-    val floor: List<Floor>
+    val floor: List<Floor>?
 )
