@@ -7,4 +7,5 @@ interface PointConfigService {
     fun createType(type: PointType): Long
     fun updateType(type: PointType)
     fun deleteType(typeId: Long)
+    fun getTypeByName(name: String): PointType
 }

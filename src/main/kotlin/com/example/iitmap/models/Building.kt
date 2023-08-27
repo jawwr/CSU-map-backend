@@ -13,8 +13,5 @@ data class Building(
     var id: Long,
 
     @Column(name = "name", nullable = false)
-    val name: String,
-
-    @OneToMany
-    val floor: List<Floor>?
+    val name: String
 )

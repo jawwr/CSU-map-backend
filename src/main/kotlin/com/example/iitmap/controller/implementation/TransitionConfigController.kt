@@ -20,7 +20,6 @@ class TransitionConfigController(private val service: TransitionConfigService) :
     override fun updateTransitionType(typeId: Long, type: TransitionType): ResponseEntity<Void> {
         type.id = typeId
         service.updateTransitionType(
-            typeId = typeId,
             type = type
         )
         return ResponseEntity.ok().build()

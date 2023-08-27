@@ -25,4 +25,6 @@ interface TransitionService {
         floorNumber: Int,
         transitionId: Long
     )
+
+    fun getTransitionById(id: Long): Transition
 }

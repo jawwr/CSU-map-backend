@@ -1,5 +1,6 @@
 package com.example.iitmap.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import lombok.NoArgsConstructor
 
@@ -18,9 +19,7 @@ data class Floor(
     @Column(name = "tilemap_link", nullable = false)
     val tilemap: String,
 
-    @OneToMany
-    val transitions: List<Transition>,
-
-    @OneToMany
-    val points: List<Point>
+    @ManyToOne
+    @JsonIgnore
+    var building: Building
 )

@@ -1,5 +1,6 @@
 package com.example.iitmap.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import lombok.NoArgsConstructor
 
@@ -13,8 +14,12 @@ data class Transition(
     var id: Long,
 
     @ManyToOne
+    @JsonIgnore
+    var floor: Floor,
+
+    @ManyToOne
     @JoinColumn(name = "point_type", nullable = false)
-    val transitionType: TransitionType,
+    var transitionType: TransitionType,
 
     @Column(name = "x_position", nullable = false)
     val x: Double,

@@ -1,27 +1,46 @@
 package com.example.iitmap.services
 
+import com.example.iitmap.exceptions.FloorNotExistException
 import com.example.iitmap.models.Floor
+import com.example.iitmap.repositories.FloorRepo
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-class FloorServiceImpl : FloorService {
+class FloorServiceImpl(
+    private val repo: FloorRepo,
+    private val buildingService: BuildingService
+) : FloorService {
     override fun getAllFloor(buildingId: Long): List<Floor> {
-        TODO("Not yet implemented")
+        buildingService.getBuildingById(buildingId)
+        return repo.findAllByBuildingId(buildingId)
     }
 
-    override fun getFloorById(buildingId: Long, floorNumber: Int): Floor {
-        TODO("Not yet implemented")
+    override fun getFloorByNumber(buildingId: Long, floorNumber: Int): Floor {
+        buildingService.getBuildingById(buildingId)
+        return repo.findFloorByBuildingIdAndNumber(buildingId, floorNumber)
+            ?: throw FloorNotExistException("Floor with number $floorNumber not exist")
     }
 
+    @Transactional
     override fun createFloor(buildingId: Long, floor: Floor): Long {
-        TODO("Not yet implemented")
+        if (floor.id != 0L) {
+            throw IllegalArgumentException("Floor id must be 0")
+        }
+        val building = buildingService.getBuildingById(buildingId)
+        floor.building = building
+        return repo.save(floor).id
     }
 
-    override fun updateFloor(buildingId: Long, floorNumber: Int, floor: Floor) {
-        TODO("Not yet implemented")
+    @Transactional
+    override fun updateFloor(buildingId: Long, floor: Floor) {
+        val savedFloor = getFloorByNumber(buildingId, floor.number)
+        floor.building = savedFloor.building
+        repo.save(floor)
     }
 
     override fun deleteFloor(buildingId: Long, floorNumber: Int) {
-        TODO("Not yet implemented")
+        buildingService.getBuildingById(buildingId)
+        repo.deleteByBuildingIdAndNumber(buildingId, floorNumber)
     }
 }

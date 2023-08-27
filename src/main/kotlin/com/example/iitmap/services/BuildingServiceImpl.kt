@@ -1,32 +1,35 @@
 package com.example.iitmap.services
 
+import com.example.iitmap.exceptions.BuildingNotExistException
 import com.example.iitmap.models.Building
-import org.slf4j.LoggerFactory
+import com.example.iitmap.repositories.BuildingRepo
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-class BuildingServiceImpl : BuildingService {
+class BuildingServiceImpl(private val repo: BuildingRepo) : BuildingService {
     override fun getBuildingById(id: Long): Building {
-        TODO("Not yet implemented")
+        return repo.findBuildingById(id) ?: throw BuildingNotExistException("Building with id $id doesn't exists")
     }
 
     override fun getAllBuildings(): List<Building> {
-        TODO("Not yet implemented")
+        return repo.findAll()
     }
 
     override fun createBuilding(building: Building): Long {
-        TODO("Not yet implemented")
+        if (building.id != 0L) {
+            throw IllegalArgumentException("Building id must be 0")
+        }
+        return repo.save(building).id
     }
 
+    @Transactional
     override fun updateBuilding(building: Building) {
-        TODO("Not yet implemented")
+        getBuildingById(building.id)
+        repo.save(building)
     }
 
     override fun deleteBuilding(buildingId: Long) {
-        TODO("Not yet implemented")
-    }
-
-    companion object {
-        val log = LoggerFactory.getLogger(this::class.java)
+        repo.deleteById(buildingId)
     }
 }

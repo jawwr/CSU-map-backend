@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 class FloorController(private val service: FloorService) : FloorApi {
     override fun getFloorByNumber(buildingId: Long, floorNumber: Int): ResponseEntity<Floor> {
         return ResponseEntity.ok(
-            service.getFloorById(
+            service.getFloorByNumber(
                 buildingId = buildingId,
                 floorNumber = floorNumber
             )
