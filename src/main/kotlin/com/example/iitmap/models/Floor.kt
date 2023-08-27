@@ -1,5 +1,6 @@
 package com.example.iitmap.models
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import lombok.NoArgsConstructor
@@ -21,5 +22,15 @@ data class Floor(
 
     @ManyToOne
     @JsonIgnore
-    var building: Building
+    var building: Building?,
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "floor")
+    @JsonIgnore
+    @JsonBackReference
+    val points: List<Point>?,
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "floor")
+    @JsonIgnore
+    @JsonBackReference
+    val transitions: List<Transition>?,
 )

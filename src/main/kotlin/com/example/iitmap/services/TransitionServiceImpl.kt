@@ -33,7 +33,7 @@ class TransitionServiceImpl(
     override fun updateTransition(buildingId: Long, floorNumber: Int, transition: Transition) {
         val saved = getTransitionById(transition.id)
         val floor = floorService.getFloorByNumber(buildingId, floorNumber)
-        if (saved.floor.id != floor.id) {
+        if (saved.floor!!.id != floor.id) {
             throw TransitionNotExistException("Transition doesn't apply to floor $floorNumber")
         }
         transition.floor = floor
@@ -46,7 +46,7 @@ class TransitionServiceImpl(
     override fun deleteTransition(buildingId: Long, floorNumber: Int, transitionId: Long) {
         val savedTransition = getTransitionById(transitionId)
         val floor = floorService.getFloorByNumber(buildingId, floorNumber)
-        if (savedTransition.floor.id != floor.id) {
+        if (savedTransition.floor!!.id != floor.id) {
             throw TransitionNotExistException("Transition doesn't apply to floor $floorNumber")
         }
         repo.deleteById(transitionId)

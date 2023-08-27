@@ -23,7 +23,7 @@ class PointServiceImpl(
 
     @Transactional
     override fun createPoint(buildingId: Long, floorNumber: Int, point: Point): Long {
-        if (point.id != 0L){
+        if (point.id != 0L) {
             throw IllegalArgumentException("Point id must be 0")
         }
         val floor = floorService.getFloorByNumber(buildingId, floorNumber)
@@ -37,7 +37,7 @@ class PointServiceImpl(
     override fun updatePoint(buildingId: Long, floorNumber: Int, point: Point) {
         val saved = getPointById(point.id)
         val floor = floorService.getFloorByNumber(buildingId, floorNumber)
-        if (saved.floor.id != floor.id) {
+        if (saved.floor!!.id != floor.id) {
             throw PointTypeNotExistException("Point doesn't apply to floor $floorNumber")
         }
         val type = pointConfigService.getTypeByName(point.pointType.name)
@@ -49,10 +49,10 @@ class PointServiceImpl(
     @Transactional
     override fun deletePoint(buildingId: Long, floorNumber: Int, pointId: Long) {
         val saved = getPointById(pointId)
-        if (saved.floor.building.id != buildingId) {
+        if (saved.floor!!.building!!.id != buildingId) {
             throw PointTypeNotExistException("Point doesn't apply to building $buildingId")
         }
-        if (saved.floor.number != floorNumber) {
+        if (saved.floor!!.number != floorNumber) {
             throw PointTypeNotExistException("Point doesn't apply to floor $floorNumber")
         }
         repo.deleteById(saved.id)

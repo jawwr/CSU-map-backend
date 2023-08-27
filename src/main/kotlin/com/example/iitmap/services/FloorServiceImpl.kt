@@ -1,5 +1,6 @@
 package com.example.iitmap.services
 
+import com.example.iitmap.exceptions.FloorAlreadyExistException
 import com.example.iitmap.exceptions.FloorNotExistException
 import com.example.iitmap.models.Floor
 import com.example.iitmap.repositories.FloorRepo
@@ -27,6 +28,15 @@ class FloorServiceImpl(
         if (floor.id != 0L) {
             throw IllegalArgumentException("Floor id must be 0")
         }
+        val isAlreadyExist: Boolean = try {
+            getFloorByNumber(buildingId, floor.number)
+            true
+        } catch (e: FloorNotExistException) {
+            false
+        }
+        if (isAlreadyExist) {
+            throw FloorAlreadyExistException("Floor ${floor.number} in building $buildingId already exists")
+        }
         val building = buildingService.getBuildingById(buildingId)
         floor.building = building
         return repo.save(floor).id
@@ -39,8 +49,9 @@ class FloorServiceImpl(
         repo.save(floor)
     }
 
+    @Transactional
     override fun deleteFloor(buildingId: Long, floorNumber: Int) {
-        buildingService.getBuildingById(buildingId)
+        getFloorByNumber(buildingId, floorNumber)
         repo.deleteByBuildingIdAndNumber(buildingId, floorNumber)
     }
 }

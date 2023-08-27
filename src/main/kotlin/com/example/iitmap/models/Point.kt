@@ -13,9 +13,9 @@ data class Point(
     @Column(name = "id", nullable = false)
     var id: Long,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.ALL])
     @JsonIgnore
-    var floor: Floor,
+    var floor: Floor?,
 
     @ManyToOne
     @JoinColumn(name = "point_type", nullable = false)

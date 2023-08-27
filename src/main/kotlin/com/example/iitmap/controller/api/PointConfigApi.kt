@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 @Tag(name = "Api для конфига точек")
 interface PointConfigApi {
     @PostMapping
-    fun createPointType(type: PointType): ResponseEntity<Long>
+    fun createPointType(@RequestBody type: PointType): ResponseEntity<Long>
 
     @GetMapping
     fun getAllTypes(): ResponseEntity<List<PointType>>

@@ -19,7 +19,8 @@ class ExceptionHandlerController {
             PointTypeNotExistException::class,
             TransitionNotExistException::class,
             TransitionTypeAlreadyExistException::class,
-            TransitionTypeNotExistException::class
+            TransitionTypeNotExistException::class,
+            FloorAlreadyExistException::class
         ]
     )
     fun handleCustomException(e: RuntimeException): ResponseEntity<ErrorMessage> {

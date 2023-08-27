@@ -25,7 +25,7 @@ class PointConfigServiceImpl(private val repo: PointTypeRepo) : PointConfigServi
             false
         }
         if (isAlreadyExist) {
-            throw PointTypeAlreadyExistException("Point type with name ${type.name} already exist")
+            throw PointTypeAlreadyExistException("Point type with name '${type.name}' already exist")
         }
         return repo.save(type).id
     }
@@ -39,7 +39,7 @@ class PointConfigServiceImpl(private val repo: PointTypeRepo) : PointConfigServi
             false
         }
         if (isAlreadyExist) {
-            throw PointTypeAlreadyExistException("Point type with name ${type.name} already exist")
+            throw PointTypeAlreadyExistException("Point type with name '${type.name}' already exist")
         }
         repo.save(type)
     }
@@ -50,6 +50,6 @@ class PointConfigServiceImpl(private val repo: PointTypeRepo) : PointConfigServi
 
     override fun getTypeByName(name: String): PointType {
         return repo.getPointTypeByName(name)
-            ?: throw PointTypeNotExistException("Point type with name $name doesn't exist")
+            ?: throw PointTypeNotExistException("Point type with name '$name' doesn't exist")
     }
 }

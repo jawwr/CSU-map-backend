@@ -15,17 +15,17 @@ class TransitionConfigServiceImpl(private val repo: TransitionTypeRepo) : Transi
 
     @Transactional
     override fun createTransitionType(type: TransitionType): Long {
-        if (type.id != 0L){
+        if (type.id != 0L) {
             throw IllegalArgumentException("Transition type id must be 0")
         }
         val isAlreadyExist: Boolean = try {
             getTransitionTypeByName(type.name)
             true
-        } catch (e: IllegalArgumentException) {
+        } catch (e: TransitionTypeNotExistException) {
             false
         }
         if (isAlreadyExist) {
-            throw IllegalArgumentException("Transition type with name ${type.name} already exist")
+            throw TransitionTypeAlreadyExistException("Transition type with name '${type.name}' already exist")
         }
         return repo.save(type).id
     }
@@ -39,7 +39,7 @@ class TransitionConfigServiceImpl(private val repo: TransitionTypeRepo) : Transi
             false
         }
         if (isAlreadyExist) {
-            throw TransitionTypeAlreadyExistException("Transition type with name ${type.name} already exist")
+            throw TransitionTypeAlreadyExistException("Transition type with name '${type.name}' already exist")
         }
         repo.save(type)
     }
@@ -51,7 +51,7 @@ class TransitionConfigServiceImpl(private val repo: TransitionTypeRepo) : Transi
 
     override fun getTransitionTypeByName(name: String): TransitionType {
         return repo.findTransitionTypeByName(name)
-            ?: throw TransitionTypeNotExistException("Transition type with name $name doesn't exists")
+            ?: throw TransitionTypeNotExistException("Transition type with name '$name' doesn't exists")
     }
 
     override fun getTransactionTypeById(id: Long): TransitionType {
