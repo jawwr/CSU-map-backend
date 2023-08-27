@@ -19,7 +19,7 @@ class TransitionServiceImpl(
 
     @Transactional
     override fun createTransition(buildingId: Long, floorNumber: Int, transition: Transition): Long {
-        if (transition.id != 0L){
+        if (transition.id != 0L) {
             throw IllegalArgumentException("Transition id must be 0")
         }
         val floor = floorService.getFloorByNumber(buildingId, floorNumber)

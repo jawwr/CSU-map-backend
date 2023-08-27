@@ -5,9 +5,11 @@ import com.example.iitmap.models.Transition
 import com.example.iitmap.services.TransitionService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@CrossOrigin
 class TransitionController(private val service: TransitionService) : TransitionApi {
     override fun getAllTransitionOnFloor(buildingId: Long, floorNumber: Int): ResponseEntity<List<Transition>> {
         return ResponseEntity.ok(

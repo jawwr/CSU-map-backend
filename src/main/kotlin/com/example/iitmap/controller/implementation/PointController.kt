@@ -5,9 +5,11 @@ import com.example.iitmap.models.Point
 import com.example.iitmap.services.PointService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@CrossOrigin
 class PointController(private val service: PointService) : PointApi {
     override fun getPointsOnFloor(buildingId: Long, floorNumber: Int): ResponseEntity<List<Point>> {
         return ResponseEntity.ok(

@@ -5,9 +5,11 @@ import com.example.iitmap.models.TransitionType
 import com.example.iitmap.services.TransitionConfigService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@CrossOrigin
 class TransitionConfigController(private val service: TransitionConfigService) : TransitionConfigApi {
     override fun getAllTransitionTypes(): ResponseEntity<List<TransitionType>> {
         return ResponseEntity.ok(service.getAllTransitionTypes())

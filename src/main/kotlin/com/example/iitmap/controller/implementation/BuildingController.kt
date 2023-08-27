@@ -5,9 +5,11 @@ import com.example.iitmap.models.Building
 import com.example.iitmap.services.BuildingService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@CrossOrigin
 class BuildingController(private val service: BuildingService) : BuildingApi {
     override fun getBuildingById(buildingId: Long): ResponseEntity<Building> {
         return ResponseEntity.ok(service.getBuildingById(id = buildingId))

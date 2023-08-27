@@ -5,9 +5,11 @@ import com.example.iitmap.models.PointType
 import com.example.iitmap.services.PointConfigService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@CrossOrigin
 class PointConfigController(private val service: PointConfigService) : PointConfigApi {
     override fun createPointType(type: PointType): ResponseEntity<Long> {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createType(type = type))
