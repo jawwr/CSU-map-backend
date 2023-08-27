@@ -2,7 +2,7 @@ package com.example.iitmap.controller.implementation
 
 import com.example.iitmap.controller.api.TransitionApi
 import com.example.iitmap.models.Transition
-import com.example.iitmap.services.TransitionService
+import com.example.iitmap.services.map.TransitionService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @CrossOrigin
 class TransitionController(private val service: TransitionService) : TransitionApi {
-    override fun getAllTransitionOnFloor(buildingId: Long, floorNumber: Int): ResponseEntity<List<Transition>> {
-        return ResponseEntity.ok(
+    override fun getAllTransitionOnFloor(buildingId: Long, floorNumber: Int): ResponseEntity<List<Transition>> =
+        ResponseEntity.ok(
             service.getAllTransitions(
                 buildingId = buildingId,
                 floorNumber = floorNumber
             )
         )
-    }
 
-    override fun createTransition(buildingId: Long, floorNumber: Int, transition: Transition): ResponseEntity<Long> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
+
+    override fun createTransition(buildingId: Long, floorNumber: Int, transition: Transition): ResponseEntity<Long> =
+        ResponseEntity.status(HttpStatus.CREATED).body(
             service.createTransition(
                 buildingId = buildingId,
                 floorNumber = floorNumber,
                 transition = transition
             )
         )
-    }
+
 
     override fun updateTransition(
         buildingId: Long,

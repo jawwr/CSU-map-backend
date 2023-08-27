@@ -1,4 +1,4 @@
-package com.example.iitmap.services
+package com.example.iitmap.services.map
 
 import com.example.iitmap.exceptions.BuildingNotExistException
 import com.example.iitmap.models.Building

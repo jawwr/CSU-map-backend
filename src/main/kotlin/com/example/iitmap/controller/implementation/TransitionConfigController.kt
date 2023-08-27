@@ -2,7 +2,7 @@ package com.example.iitmap.controller.implementation
 
 import com.example.iitmap.controller.api.TransitionConfigApi
 import com.example.iitmap.models.TransitionType
-import com.example.iitmap.services.TransitionConfigService
+import com.example.iitmap.services.map.TransitionConfigService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @CrossOrigin
 class TransitionConfigController(private val service: TransitionConfigService) : TransitionConfigApi {
-    override fun getAllTransitionTypes(): ResponseEntity<List<TransitionType>> {
-        return ResponseEntity.ok(service.getAllTransitionTypes())
-    }
+    override fun getAllTransitionTypes(): ResponseEntity<List<TransitionType>> =
+        ResponseEntity.ok(service.getAllTransitionTypes())
 
-    override fun createTransitionType(type: TransitionType): ResponseEntity<Long> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createTransitionType(type = type))
-    }
+    override fun createTransitionType(type: TransitionType): ResponseEntity<Long> =
+        ResponseEntity.status(HttpStatus.CREATED).body(service.createTransitionType(type = type))
+
 
     override fun updateTransitionType(typeId: Long, type: TransitionType): ResponseEntity<Void> {
         type.id = typeId

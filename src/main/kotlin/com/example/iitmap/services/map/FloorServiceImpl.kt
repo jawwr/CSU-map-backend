@@ -1,4 +1,4 @@
-package com.example.iitmap.services
+package com.example.iitmap.services.map
 
 import com.example.iitmap.exceptions.FloorAlreadyExistException
 import com.example.iitmap.exceptions.FloorNotExistException

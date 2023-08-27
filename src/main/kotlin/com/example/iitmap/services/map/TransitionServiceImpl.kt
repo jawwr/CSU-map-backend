@@ -1,4 +1,4 @@
-package com.example.iitmap.services
+package com.example.iitmap.services.map
 
 import com.example.iitmap.exceptions.TransitionNotExistException
 import com.example.iitmap.models.Transition
