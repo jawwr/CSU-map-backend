@@ -1,10 +1,10 @@
-FROM gradle:4.7.0-jdk8-alpine AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build --no-daemon
+FROM gradle:8.2.1-alpine AS build
+COPY . /src
+WORKDIR /src
+RUN gradle clean build --no-daemon -x test
 
-FROM openjdk:8-jre-slim
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /src/build/libs/*.jar app.jar
 EXPOSE 8000
-RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
-ENTRYPOINT ["java","-jar","/app/spring-boot-application.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

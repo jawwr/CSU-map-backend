@@ -30,7 +30,7 @@ class UserDetailImpl(
 
     companion object {
         fun of(user: User): UserDetailImpl {
-            val authorities: MutableList<out GrantedAuthority> = mutableListOf(SimpleGrantedAuthority(user.role?.name))
+            val authorities: MutableList<out GrantedAuthority> = mutableListOf(SimpleGrantedAuthority(user.role.name))
             return UserDetailImpl(
                 id = user.id,
                 username = user.login,
