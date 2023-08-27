@@ -1,10 +1,10 @@
-FROM maven as builder
-COPY . /src
-WORKDIR /src
-RUN mvn clean package -DskipTests
+FROM gradle:4.7.0-jdk8-alpine AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon
 
-FROM maven
-WORKDIR /app
-COPY --from=builder /src/target/*.jar app.jar
+FROM openjdk:8-jre-slim
 EXPOSE 8000
-ENTRYPOINT ["java", "-jar", "app.jar"]
+RUN mkdir /app
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
+ENTRYPOINT ["java","-jar","/app/spring-boot-application.jar"]
