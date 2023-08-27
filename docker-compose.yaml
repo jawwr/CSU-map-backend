@@ -1,0 +1,30 @@
+version: "3"
+services:
+  app_db:
+    image: postgres
+    container_name: app_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    restart: on-failure
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - app_db
+    links:
+      - app_db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://app_db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW-SQL=true
+    restart: on-failure
