@@ -13,7 +13,7 @@ data class Point(
     @Column(name = "id", nullable = false)
     var id: Long,
 
-    @ManyToOne(cascade = [CascadeType.ALL])
+    @ManyToOne
     @JsonIgnore
     var floor: Floor?,
 

@@ -16,9 +16,8 @@ class BuildingController(private val service: BuildingService) : BuildingApi {
 
     override fun getAllBuildings(): ResponseEntity<List<Building>> = ResponseEntity.ok(service.getAllBuildings())
 
-    override fun createBuilding(building: Building): ResponseEntity<Long> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createBuilding(building = building))
-    }
+    override fun createBuilding(building: Building): ResponseEntity<Long> =
+        ResponseEntity.status(HttpStatus.CREATED).body(service.createBuilding(building = building))
 
     override fun updateBuildingById(buildingId: Long, building: Building): ResponseEntity<Void> {
         building.id = buildingId
