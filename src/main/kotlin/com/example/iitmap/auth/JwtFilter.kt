@@ -31,21 +31,27 @@ class JwtFilter(
             filterChain.doFilter(request, response)
             return
         }
+        if (SecurityContextHolder.getContext().authentication != null) {
+            filterChain.doFilter(request, response)
+            return
+        }
         val jwt: String = authHeader.substring(7)
+        val userToken: Token? = tokenRepository.findByToken(jwt)
+        if (userToken == null) {
+            filterChain.doFilter(request, response)
+            return
+        }
         val userLogin: String = jwtService.extractLogin(jwt)
-        if (SecurityContextHolder.getContext().authentication == null) {
-            val userDetails: UserDetailImpl = this.userDetailsService.loadUserByUsername(userLogin) as UserDetailImpl
-            val userTokens: Token = tokenRepository.findByToken(jwt)
-            val isTokenValid = !userTokens.revoked && !userTokens.expired
-            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
-                val token = UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.authorities
-                )
-                token.details = WebAuthenticationDetailsSource().buildDetails(request)
-                SecurityContextHolder.getContext().authentication = token
-            }
+        val userDetails: UserDetailImpl = userDetailsService.loadUserByUsername(userLogin) as UserDetailImpl
+        val isTokenValid = !userToken.revoked && !userToken.expired && userToken.user.id == userDetails.id
+        if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+            val token = UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.authorities
+            )
+            token.details = WebAuthenticationDetailsSource().buildDetails(request)
+            SecurityContextHolder.getContext().authentication = token
         }
         filterChain.doFilter(request, response)
     }

@@ -8,11 +8,21 @@ import org.springframework.security.core.userdetails.UserDetails
 
 @NoArgsConstructor
 class UserDetailImpl(
-    private val id: Long,
     private val username: String,
     private val password: String,
     private val authorities: MutableCollection<out GrantedAuthority>
 ) : UserDetails {
+    var id: Long = 0
+        private set
+
+    constructor(
+        id: Long,
+        username: String,
+        password: String,
+        authorities: MutableCollection<out GrantedAuthority>
+    ) : this(username, password, authorities) {
+        this.id = id
+    }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = authorities
 

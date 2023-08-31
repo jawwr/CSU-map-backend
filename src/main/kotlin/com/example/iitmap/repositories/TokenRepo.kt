@@ -15,7 +15,7 @@ interface TokenRepo : JpaRepository<Token, Long> {
             AND (tokens.expired = false or tokens.revoked = false)
             """, nativeQuery = true
     )
-    fun findAllValidTokenByUserId(userId: Long?): List<Token>
+    fun findAllValidTokenByUserId(userId: Long): List<Token>
 
-    fun findByToken(token: String?): Token
+    fun findByToken(token: String): Token?
 }
